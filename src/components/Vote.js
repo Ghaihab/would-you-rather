@@ -6,24 +6,15 @@ import { FaCheckCircle, FaRegTimesCircle } from 'react-icons/fa';
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { connect } from 'react-redux';
 import {handleVote} from "../actions/questions";
+import Button from "react-bootstrap/Button";
 
 
-class ResultVote extends Component {
-    constructor(props){
-        super(props);
-
-        const backgroundColors = {
-                default: '#e2e2e2',
-                red: '#ba2140',
-                black: '#233045'
-        }
-    }
-
+class Vote extends Component {
     render() {
         const {
             question,
             user,
-            answer
+            answer,
         } = this.props;
 
         return (
@@ -36,36 +27,33 @@ class ResultVote extends Component {
                     <Card.Title>
                         {answer ? 'You have answered the question' : 'Click on the card to vote'}
                     </Card.Title>
-                    <Card.Text>
-                        <CardDeck>
-                            <Card text="white" style={
-                                { width: '18rem', backgroundColor: `${this.showCardStyle('optionOne')}` }
-                            }>
-                                <Card.Header>
-                                    {this.showIcon('optionOne')}
-                                </Card.Header>
-                                <Card.Body as='Button' onClick={() => this.vote('optionOne')}>
-                                    <Card.Title>{question.optionOne.text}</Card.Title>
-                                    <Card.Text>
-                                        {this.showVoteResult('optionOne')}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                            <Card text="white" style={
-                                { width: '18rem', backgroundColor: `${this.showCardStyle('optionTwo')}` }
-                            }>
-                                <Card.Header>
-                                    {this.showIcon('optionTwo')}
-                                </Card.Header>
-                                <Card.Body as='Button' onClick={() => this.vote('optionTwo')}>
-                                    <Card.Title>{question.optionTwo.text}</Card.Title>
-                                    <Card.Text>
-                                        {this.showVoteResult('optionTwo')}
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </CardDeck>
-                    </Card.Text>
+                    <CardDeck>
+
+                        <Card text="white" style={
+                            { width: '18rem', backgroundColor: `${this.showCardStyle('optionOne')}` }
+                        }>
+                            <Card.Header>
+                                {this.showIcon('optionOne')}
+                            </Card.Header>
+                            <Button variant='light' onClick={() => this.vote('optionOne')}>
+                                <Card.Title>{question.optionOne.text}</Card.Title>
+                                {this.showVoteResult('optionOne')}
+                            </Button>
+                        </Card>
+
+                        <Card text="white" style={
+                            { width: '18rem', backgroundColor: `${this.showCardStyle('optionTwo')}` }
+                        }>
+                            <Card.Header>
+                                {this.showIcon('optionTwo')}
+                            </Card.Header>
+                            <Button variant='light' onClick={() => this.vote('optionTwo')}>
+                                <Card.Title>{question.optionTwo.text}</Card.Title>
+                                {this.showVoteResult('optionTwo')}
+                            </Button>
+                        </Card>
+
+                    </CardDeck>
                 </Card.Body>
             </Card>
         );
@@ -125,7 +113,7 @@ function mapStateToProps({ questions, users, authedUser }, props) {
         .map((value) => {return value})
         .find((user) => { return user.id === question.author });
 
-    let answer = authedUser.answers[question_id];
+    let answer = authedUser ? authedUser.answers[question_id] : null;
 
     return {
         question,
@@ -136,4 +124,4 @@ function mapStateToProps({ questions, users, authedUser }, props) {
 
 }
 
-export default connect(mapStateToProps)(ResultVote);
+export default connect(mapStateToProps)(Vote);
