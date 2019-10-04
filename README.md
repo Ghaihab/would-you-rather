@@ -4,7 +4,7 @@ Give people two options to choose from. One is free to choose any of the options
 
 
 ## Project features
-The project use react and redux javasciprt framework.
+The project use react and redux javascript framework.
 and the features provided are: 
 - Create a Question.
 - Vote (Question answer)
@@ -14,7 +14,10 @@ and the features provided are:
 
 
 ## Running the project
-### `npm start`
+##### `npm install`
+
+installing all dependencies
+##### `npm start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

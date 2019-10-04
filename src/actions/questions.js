@@ -7,42 +7,30 @@ export const VOTE = 'VOTE';
 export const SAVE_QUESTION = 'SAVE_QUESTION';
 
 
-export function receiveQuestions(questions) {
+export function receiveQuestions(authedUser, questions) {
+    let answeredQuestions = {};
+    let unAnsweredQuestions = {};
+
+    if(authedUser){
+        Object.values(questions)
+            .forEach((question) => {
+            if(authedUser.answers[question.id] !== undefined){
+                answeredQuestions[question.id] = question;
+            }
+        });
+
+        Object.values(questions)
+            .forEach((question) => {
+            if(authedUser.answers[question.id] === undefined){
+                unAnsweredQuestions[question.id] = question;
+            }
+        });
+    }
+
     return {
         type: RECEIVE_QUESTIONS,
         all: questions,
-    }
-}
-
-
-export function getAnsweredQuestions(authedUser, questions) {
-
-    let answeredQuestions = {};
-
-    Object.keys(questions).forEach((question_id) => {
-        if(authedUser.answers[question_id] !== undefined){
-            answeredQuestions[question_id] = questions[question_id]
-        }
-    });
-
-    return {
-        type: GET_ANSWERED_QUESTIONS,
-        answered_questions: answeredQuestions
-    }
-}
-
-export function getUnAnsweredQuestions(authedUser, questions) {
-
-    let unAnsweredQuestions = {};
-
-    Object.keys(questions).forEach((question_id) => {
-        if(authedUser.answers[question_id] === undefined){
-            unAnsweredQuestions[question_id] = questions[question_id]
-        }
-    });
-
-    return {
-        type: GET_UNANSWERED_QUESTIONS,
+        answered_questions: answeredQuestions,
         unanswered_questions: unAnsweredQuestions
     }
 }

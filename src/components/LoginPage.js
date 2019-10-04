@@ -8,11 +8,14 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { loginUser } from "../actions/authedUser";
 import Image from "react-bootstrap/Image";
 import { Redirect } from 'react-router-dom'
+import { handleGetQuestions } from "../actions/shared";
 
 class LoginPage extends Component {
     render() {
         if(this.props.authedUser){
-            return <Redirect to='/home' /> ;
+            return <Redirect to={{
+                pathname: "/home",
+            }} /> ;
         }
         return (
             <div>
@@ -51,6 +54,7 @@ class LoginPage extends Component {
     loginUser = (event) => {
         let username = event.currentTarget.textContent;
         let user = this.props.users.find((user) => {return user.name === username});
+        this.props.dispatch(handleGetQuestions(user));
         this.props.dispatch(loginUser(user));
     }
 }

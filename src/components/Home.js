@@ -5,17 +5,13 @@ import Button from "react-bootstrap/Button";
 import CardColumns from "react-bootstrap/CardColumns";
 import { connect } from 'react-redux';
 import {NavLink, Redirect} from "react-router-dom";
-import {
-    getAnsweredQuestions,
-    getUnAnsweredQuestions
-} from "../actions/questions";
 
 class Home extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            show: ''
+            show: 'unanswered_questions'
         }
     }
 
@@ -49,7 +45,7 @@ class Home extends Component {
                                 </Card.Body>
                                 <Card.Footer>
                                     <small className="text-muted text-center">
-                                            <NavLink exact to={`/view/question/${question.id}`}>
+                                            <NavLink exact to={`/vote/question/${question.id}`}>
                                                 <Button type="submit" value="View poll">
                                                    View poll
                                                 </Button>
@@ -70,33 +66,31 @@ class Home extends Component {
 
     getQuestions = () => {
 
+        if(Object.values(this.props.questions).length === 0){
+            return [];
+        }
         if(this.state.show === 'answered_questions'){
-            return Object.values(this.props.questions.answered_questions);
+            return Object.values(this.props.questions.answered_questions).sort((a, b) => b.timestamp - a.timestamp);
         }
 
         if(this.state.show === 'unanswered_questions'){
-            return Object.values(this.props.questions.unanswered_questions);
+            return Object.values(this.props.questions.unanswered_questions).sort((a, b) => b.timestamp - a.timestamp );
         }
-
-        return Object.values(this.props.questions.all);
     }
 
 
     _getUnAnsweredQuestions = () => {
-        this.props.dispatch(getUnAnsweredQuestions(this.props.authedUser, this.props.questions.all));
         this.setState({show: 'unanswered_questions'});
     }
 
 
     _getAnsweredQuestions = () => {
-        this.props.dispatch(getAnsweredQuestions(this.props.authedUser, this.props.questions.all));
         this.setState({show: 'answered_questions'});
     }
 
 }
 
 function mapStateToProps({ authedUser, questions, users }){
-
     return {
         authedUser,
         questions,

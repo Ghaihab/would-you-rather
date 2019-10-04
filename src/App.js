@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import LeaderBoard from "./components/LeaderBoard";
 import Vote from "./components/Vote";
 import Home from "./components/Home";
-import { handleInitialData } from "./actions/shared";
+import { handleGetUsers } from "./actions/shared";
 import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading';
 import { BrowserRouter, Route} from "react-router-dom";
@@ -16,7 +16,7 @@ import { BrowserRouter, Route} from "react-router-dom";
 class App extends Component {
 
     componentDidMount() {
-        this.props.dispatch(handleInitialData());
+        this.props.dispatch(handleGetUsers());
     }
 
     render() {
@@ -27,20 +27,14 @@ class App extends Component {
                 <br/>
                 <Container>
                     <Route path='/' exact component={LoginPage} />
-                    <Route path='/home' exact component={Home} />
-                    <Route path='/view/question/:question_id' exact component={Vote}/>
-                    <Route path='/new/question' exact component={NewQuestion} />
-                    <Route path='/leaderboard' exact component={LeaderBoard} />
+                    <Route path='/home' component={Home} />
+                    <Route path='/vote/question/:question_id' component={Vote}/>
+                    <Route path='/new/question' component={NewQuestion} />
+                    <Route path='/leaderboard' component={LeaderBoard} />
                 </Container>
             </BrowserRouter>
         );
     }
 }
 
-function mapStateToProps({authedUser}){
-    return {
-        authedUser
-    }
-}
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);

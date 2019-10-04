@@ -7,6 +7,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import { connect } from 'react-redux';
 import {handleVote} from "../actions/questions";
 import Button from "react-bootstrap/Button";
+import {handleGetQuestions} from "../actions/shared";
 
 
 class Vote extends Component {
@@ -16,6 +17,10 @@ class Vote extends Component {
             user,
             answer,
         } = this.props;
+
+        if(! user){
+            return <React.Fragment />
+        }
 
         return (
             <Card className="text-center">
@@ -72,6 +77,7 @@ class Vote extends Component {
         }
 
         this.props.dispatch(handleVote(authedUser, question, answerOption));
+        this.props.dispatch(handleGetQuestions(authedUser));
     }
 
     showCardStyle = (option) => {
@@ -104,10 +110,14 @@ class Vote extends Component {
 
 function mapStateToProps({ questions, users, authedUser }, props) {
     let question_id = props.match.params.question_id;
-
-    let question = Object.values(questions.all).find((question) => {
-        return question.id === question_id;
-    });
+    let _questions =  Object.values(questions);
+    let question = {};
+    if(_questions.length){
+        console.log(questions);
+        question = Object.values(questions.all).find((question) => {
+            return question.id === question_id;
+        });
+    }
 
     let user = Object.values(users)
         .map((value) => {return value})

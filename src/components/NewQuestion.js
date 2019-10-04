@@ -3,12 +3,14 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
-import {getUnAnsweredQuestions, handleSaveQuestion} from "../actions/questions";
+import {handleSaveQuestion} from "../actions/questions";
 import {Redirect} from "react-router-dom";
+import {handleGetUsers} from "../actions/shared";
 
 class NewQuestion extends Component {
     constructor(props){
         super(props);
+
         this.state = {
             optionOneText: '',
             optionTwoText: '',
@@ -61,10 +63,8 @@ class NewQuestion extends Component {
         const { authedUser } = this.props;
 
         this.props.dispatch(handleSaveQuestion(optionOneText, optionTwoText, authedUser.id));
-
+        this.props.dispatch(handleGetUsers());
         this.setState({toHome: true});
-
-        this.props.dispatch(getUnAnsweredQuestions(this.props.authedUser, this.props.questions.all));
     }
 }
 
