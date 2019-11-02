@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import CardColumns from "react-bootstrap/CardColumns";
 import { connect } from 'react-redux'
 import { FaTrophy } from "react-icons/all";
+
 class LeaderBoard extends Component {
     render() {
         return (
@@ -56,8 +57,6 @@ class LeaderBoard extends Component {
                         </Card.Footer>
                     </Card>
                 })}
-
-
             </CardColumns>
         );
     }
@@ -78,9 +77,9 @@ function mapStateToProps({ users }){
     users = _users.filter((user) => {
         return user.id !== winner.id;
     }).sort(function(user, nextUser) {
-        let userScore = Object.values(user.answers).length + Object.values(nextUser.questions).length;
-        let nextUserScore = Object.values(nextUser.answers) + Object.values(nextUser.questions).length;
-        if (userScore > nextUserScore){
+        let userScore = Object.values(user.answers).length + Object.values(user.questions).length;
+        let nextUserScore = Object.values(nextUser.answers).length + Object.values(nextUser.questions).length;
+        if (userScore < nextUserScore){
             return 1;
         }
         return -1;

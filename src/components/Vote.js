@@ -7,7 +7,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import { connect } from 'react-redux';
 import {handleVote} from "../actions/questions";
 import Button from "react-bootstrap/Button";
-import {handleGetQuestions} from "../actions/shared";
+import {handleGetQuestions, handleGetUsers} from "../actions/shared";
 
 
 class Vote extends Component {
@@ -78,6 +78,7 @@ class Vote extends Component {
 
         this.props.dispatch(handleVote(authedUser, question, answerOption));
         this.props.dispatch(handleGetQuestions(authedUser));
+        this.props.dispatch(handleGetUsers());
     }
 
     showCardStyle = (option) => {
@@ -113,7 +114,6 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     let _questions =  Object.values(questions);
     let question = {};
     if(_questions.length){
-        console.log(questions);
         question = Object.values(questions.all).find((question) => {
             return question.id === question_id;
         });

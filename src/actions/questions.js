@@ -1,7 +1,5 @@
 import {_saveQuestion, _saveQuestionAnswer} from "../utils/_DATA";
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
-export const GET_UNANSWERED_QUESTIONS = 'GET_UNANSWERED_QUESTIONS';
-export const GET_ANSWERED_QUESTIONS = 'GET_ANSWERED_QUESTIONS';
 export const VOTE = 'VOTE';
 
 export const SAVE_QUESTION = 'SAVE_QUESTION';

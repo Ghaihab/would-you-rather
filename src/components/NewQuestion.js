@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import {handleSaveQuestion} from "../actions/questions";
-import {Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {handleGetUsers} from "../actions/shared";
 
 class NewQuestion extends Component {
@@ -14,13 +14,9 @@ class NewQuestion extends Component {
         this.state = {
             optionOneText: '',
             optionTwoText: '',
-            toHome: false,
         }
     }
     render() {
-        if(this.state.toHome){
-            return <Redirect to='/home' /> ;
-        }
 
         return (
             <Card border="dark" style={{ width: '100%' }}>
@@ -64,7 +60,11 @@ class NewQuestion extends Component {
 
         this.props.dispatch(handleSaveQuestion(optionOneText, optionTwoText, authedUser.id));
         this.props.dispatch(handleGetUsers());
-        this.setState({toHome: true});
+
+        this.props.history.push({
+            pathname: '/home'
+        });
+
     }
 }
 
@@ -75,4 +75,4 @@ function mapStateToProps({ authedUser, questions}){
     }
 }
 
-export default connect(mapStateToProps)(NewQuestion);
+export default withRouter(connect(mapStateToProps)(NewQuestion));

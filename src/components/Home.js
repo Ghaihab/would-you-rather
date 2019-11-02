@@ -4,7 +4,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import CardColumns from "react-bootstrap/CardColumns";
 import { connect } from 'react-redux';
-import {NavLink, Redirect} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Home extends Component {
     constructor(props){
@@ -16,11 +16,6 @@ class Home extends Component {
     }
 
     render() {
-
-        if(! this.props.authedUser){
-            return <Redirect to='/' /> ;
-        }
-
         return (
             <Card className="text-center">
                 <Card.Header>
@@ -45,7 +40,7 @@ class Home extends Component {
                                 </Card.Body>
                                 <Card.Footer>
                                     <small className="text-muted text-center">
-                                            <NavLink exact to={`/vote/question/${question.id}`}>
+                                            <NavLink exact to={`/question/${question.id}`}>
                                                 <Button type="submit" value="View poll">
                                                    View poll
                                                 </Button>

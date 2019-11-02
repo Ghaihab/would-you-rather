@@ -6,15 +6,12 @@ import WouldYouRather from './WouldYouRather'
 import { FaSignOutAlt } from 'react-icons/fa';
 import Image from "react-bootstrap/Image";
 import connect from "react-redux/es/connect/connect";
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 import { logoutUser } from "../actions/authedUser";
 
 
 class NavBar extends Component {
     render() {
-        if(! this.props.authedUser){
-            return <Redirect to='/' /> ;
-        }
         return (
             <div>
                 <Navbar style={{backgroundColor: '#233045'}}>
@@ -26,7 +23,7 @@ class NavBar extends Component {
                                 <NavLink to='/home' exact>
                                     <h4 style={{color: '#dfdfdf'} }>Home  | </h4>
                                 </NavLink>
-                                <NavLink to='/new/question'>
+                                <NavLink to='/add'>
                                     <h4 style={{color: '#dfdfdf'}}>New Question  |</h4>
                                 </NavLink>
                                 <NavLink to='/leaderboard'>
@@ -52,6 +49,11 @@ class NavBar extends Component {
 
     logout = () => {
         this.props.dispatch(logoutUser());
+
+        this.props.history.push({
+            pathname: '/'
+        });
+
     }
 }
 
@@ -61,4 +63,4 @@ function mapStateToProps({ authedUser }) {
     }
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));

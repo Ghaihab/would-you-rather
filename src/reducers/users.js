@@ -1,7 +1,12 @@
 import { RECEIVE_USERS } from "../actions/users";
 
+let _users = {};
 
-export default function users(state = {}, action) {
+if(localStorage.getItem('store')){
+    _users = JSON.parse(localStorage.getItem('store')).users;
+}
+
+export default function users(state = _users, action) {
     switch (action.type) {
         case RECEIVE_USERS:
             return {
