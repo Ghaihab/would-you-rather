@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {handleVote} from "../actions/questions";
 import Button from "react-bootstrap/Button";
 import {handleGetQuestions, handleGetUsers} from "../actions/shared";
+import {withRouter} from "react-router-dom";
 
 
 class Vote extends Component {
@@ -119,6 +120,13 @@ function mapStateToProps({ questions, users, authedUser }, props) {
         });
     }
 
+    if (!question){
+        props.history.push({
+            pathname: '/error'
+        });
+        return {};
+    }
+
     let user = Object.values(users)
         .map((value) => {return value})
         .find((user) => { return user.id === question.author });
@@ -134,4 +142,4 @@ function mapStateToProps({ questions, users, authedUser }, props) {
 
 }
 
-export default connect(mapStateToProps)(Vote);
+export default withRouter(connect(mapStateToProps)(Vote));

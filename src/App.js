@@ -27,6 +27,12 @@ const NeedToLogin = () => {
     </div>
 }
 
+const Error404 = () => {
+    return <div>
+        <h3>Page not found! Error 404</h3>
+    </div>
+}
+
 class App extends Component {
     constructor(props){
         super(props);
@@ -54,20 +60,22 @@ class App extends Component {
                         <Route path={'/'} exact component={LoginPage} />
 
                         <Route path={'/home'} exact render={() => (
-                                authedUser ? <Home/> : <NeedToLogin/>
+                                authedUser ? <Home/> : <LoginPage/>
                         )}/>
 
                         <Route path={'/question/:question_id'} exact render={(props) => (
-                                authedUser ? <Vote {...props} /> : <NeedToLogin/>
+                                authedUser ? <Vote {...props} /> : <LoginPage/>
                         )}/>
 
                         <Route path={'/add'} exact render={() => (
-                                authedUser ? <NewQuestion/> : <NeedToLogin/>
+                                authedUser ? <NewQuestion/> : <LoginPage/>
                         )}/>
 
                         <Route path={'/leaderboard'} exact render={() => (
-                                authedUser ? <LeaderBoard/> : <NeedToLogin/>
+                                authedUser ? <LeaderBoard/> : <LoginPage/>
                         )}/>
+
+                        <Route path={'/error'} exact component={Error404}/>
 
                         <Route component={ErrorPage}/>
                     </Switch>
