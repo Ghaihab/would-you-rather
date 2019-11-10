@@ -39,11 +39,11 @@ class Vote extends Component {
                             { width: '18rem', backgroundColor: `${this.showCardStyle('optionOne')}` }
                         }>
                             <Card.Header>
-                                {this.showIcon('optionOne')}
+                                {answer ?this.showIcon('optionOne'): null}
                             </Card.Header>
                             <Button variant='light' onClick={() => this.vote('optionOne')}>
                                 <Card.Title>{question.optionOne.text}</Card.Title>
-                                {this.showVoteResult('optionOne')}
+                                {answer ? this.showVoteResult('optionOne'): null}
                             </Button>
                         </Card>
 
@@ -51,11 +51,11 @@ class Vote extends Component {
                             { width: '18rem', backgroundColor: `${this.showCardStyle('optionTwo')}` }
                         }>
                             <Card.Header>
-                                {this.showIcon('optionTwo')}
+                                {answer ? this.showIcon('optionTwo'): null}
                             </Card.Header>
                             <Button variant='light' onClick={() => this.vote('optionTwo')}>
                                 <Card.Title>{question.optionTwo.text}</Card.Title>
-                                {this.showVoteResult('optionTwo')}
+                                {answer ? this.showVoteResult('optionTwo'): null}
                             </Button>
                         </Card>
 
